@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
-import { requestPermissionAsync, getCurrentPositionAsync } from 'expo-location';
+import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import api from '../src/services/api';
+import api from '../services/api';
 
 function Main({ navigation }){
     const [devs, setDevs] = useState([]);
-    const [currentRegion, setCurrentRegion ] = setState(null);
+    const [currentRegion, setCurrentRegion ] = useState(null);
     
     useEffect(() => {
         async function loadInitialPosition(){
-            const { granted } = await requestPermissionAsync();
+            const { granted } = await requestPermissionsAsync();
 
             if (granted){
                 const { coords } = await getCurrentPositionAsync({
@@ -60,7 +60,7 @@ function Main({ navigation }){
     return (
         <>
             <MapView onRegionChangeComplete={handleRegionChanged} 
-                initialRegion={currenRegion} 
+                initialRegion={currentRegion} 
                 style={styles.map}
             >
 
